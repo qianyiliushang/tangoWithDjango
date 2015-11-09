@@ -8,7 +8,9 @@
 </head>
 
 <body>
-    <h1>Rango says...</h1> hello world! {% if categories %}
+    <h1>Rango says...</h1> hello world!<br>
+    <a href=" {% url 'add_category'%}">Add a New Category</a><br/>
+    <br>{% if categories %}
     <ul>
         {% for category in categories %}
         <li><a href="/rango/category/{{category.slug}}">{{category.name}}</a></li>
@@ -16,9 +18,18 @@
     </ul>
     {% else %}
     <strong>There are no available categories</strong> {% endif %}
-    <strong>{{boldmessage}}</strong>
     <br>
+    {% if most_viewed_pages %}
+        <h1>Most popular pages</h1>
+         {% for page in most_viewed_pages %}
+            <ul>
+                <li><a href="{{ page.url }}">{{ page.title }}({{ page.views }})</a> </li>
+            </ul>
+         {% endfor %}
+
+    {% endif %} 
     <a href="/rango/about">About</a>
+    <br>
     <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango">
 </body>
 

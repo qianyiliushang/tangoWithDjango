@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new page</title>
+</head>
+<body>
+{% if category %}
+    <form id="add_page" action="{% url 'add_page' category.slug %}" method="post">
+        {% csrf_token %}
+        {% for hiddernfield in form.hidden_fields %}
+            {{ hiddernfield }}
+
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}<br>
+            {{ field }}<br>
+        {% endfor %}
+        <br>
+
+        <input type="submit" value="add"/>
+    </form>
+{% else %}
+    <p>This is category does not exist.</p>
+{% endif %}
+
+</body>
+</html>

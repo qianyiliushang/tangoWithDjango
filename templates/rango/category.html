@@ -16,11 +16,13 @@
             {% endfor %}
            </ul>
         {% else %}
-            <strong>No pages currently in category</strong>
+            <strong>{{ category_not_found }}</strong>
         {% endif %}
     {% else %}
         The specified category {{category_name}} does not exist
     {% endif %}
+    <br>
+    <a href="{% url 'add_page' category.slug %}">add a new page</a>
 </body>
 
 </html>
