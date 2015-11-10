@@ -108,3 +108,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"
+
+PASSWORD_HASHERS = (
+'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
+
+LOGIN_URL = '/rango/login/'
