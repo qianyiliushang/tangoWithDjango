@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 {% load staticfiles %}
-{% load admin_urls %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rango</title>
-</head>
-<body>
-<form id = "category_form" method="post" action="{% url 'add_category'%}">
+{% block tittle %}
+Add Category
+
+{% endblock tittle %}
+Add Category
+{% block body_block %}
+    <form id = "category_form" method="post" action="{% url 'add_category'%}">
     {% csrf_token %}
     {% for hidden in form.hidden_fields %}
         {{ hidden }}
@@ -19,5 +18,5 @@
     {% endfor %}
     <input type="submit" name="submit" value="Create Category"/>
 </form>
-</body>
-</html>
+{% endblock body_block %}
+

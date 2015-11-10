@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Rango - {% block titlle%} How to Tango with Django {% endblock titlle%} How to Tango with Django</title>
+</head>
+
+<body>
+    <div>
+        {% block body_block %} {% endblock body_block %}
+    </div>
+    <hr/>
+    <div>
+        <ul>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'restricted' %}">Restricted page</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% if not 'add_category' in request.path %}
+            <li><a href="{% url 'add_category' %}">Add a new Category</a></li>
+
+            {% endif %}
+            {% else %}
+            {% if  not 'register' in request.path %}
+            <li><a href="{% url 'register' %}">Register Here</a></li>
+
+            {% endif %}
+            {% if not 'login' in request.get_full_path%}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %}
+            {% endif %}
+            <li><a href="{% url 'about' %}">About</a></li>
+        </ul>
+    </div>
+</body>
+
+</html>

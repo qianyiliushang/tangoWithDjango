@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add a new page</title>
-</head>
-<body>
-{% if category %}
+{% extends "base.html" %}
+{% block title %}
+Add a new Category
+
+{% endblock title %}
+
+{% block body_block %}
+    {% if category %}
     <form id="add_page" action="{% url 'add_page' category.slug %}" method="post">
         {% csrf_token %}
         {% for hiddernfield in form.hidden_fields %}
@@ -24,6 +24,5 @@
 {% else %}
     <p>This is category does not exist.</p>
 {% endif %}
+{% endblock body_block %}
 
-</body>
-</html>

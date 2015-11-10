@@ -1,16 +1,12 @@
-<!DOCTYPE <!DOCTYPE html> {% load staticfiles %}
-<html>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}
+About Rango
 
-<head>
-    <title> About rango</title>
-</head>
-
-<body>
+{% endblock title %}
+{% block body_block %}
     <p>About rango</p>
     <img src="{%  static 'images/rango2.jpg' %}" alt="about rango">
     <br> {{about}}
     <br>
-    <a href="/rango"> Rango Home</a>
-</body>
-
-</html>
+{% endblock body_block %}
