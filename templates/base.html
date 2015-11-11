@@ -12,28 +12,18 @@
     <hr/>
     <div>
         <ul>
-            {% if user.is_authenticated %}
-                {% if not 'restricted' in request.path %}
-                    <li><a href="{% url 'restricted' %}">Restricted page</a></li>
-                {% endif %}
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% if not 'add_category' in request.path %}
-                    <li><a href="{% url 'add_category' %}">Add a new Category</a></li>
-                {% endif %}
-            {% else %}
-                {% if not 'register' in request.path %}
-                    <li><a href="{% url 'register' %}">Register Here</a></li>
-                {% endif %}
-                {% if not  'login' in request.get_full_path%}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                {% endif %}
+            {% if user.is_authenticated %} {% if not 'restricted' in request.path %}
+            <li><a href="{% url 'restricted' %}">Restricted page</a></li>
             {% endif %}
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% if not 'add_category' in request.path %}
+            <li><a href="{% url 'add_category' %}">Add a new Category</a></li>
+            {% endif %} {% else %} {% if not 'register' in request.path %}
+            <li><a href="{% url 'register' %}">Register Here</a></li>
+            {% endif %} {% if not 'login' in request.get_full_path%}
+            <li><a href="{% url 'login' %}">Login</a></li>
+            {% endif %} {% endif %}
             <li><a href="{% url 'about' %}">About</a></li>
-          {#   {% if not html_template_endswith='index.html'  %}
-            <li>
-                <a href="{% url 'index' %}"></a>
-            </li>
-            {% endif %} #}
         </ul>
     </div>
 </body>

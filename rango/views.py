@@ -4,6 +4,7 @@ from .models import Category, Page
 from .forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 # Create your views here.
@@ -12,13 +13,29 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     # return HttpResponse("Rango says hey there world <br><a href =
     # '/rango/about'>About </a>")
+    # request.session.set_test_cookie()
     category_list = Category.objects.order_by('-likes')
     most_viewed_pages = Page.objects.order_by('-views')
     html_template = 'rango/index.html'
+    visit = int(request.COOKIES.get('visit', '1'))
+    reset_last_visit_time = False
     context_dict = {"categories": category_list,
                     "most_viewed_pages": most_viewed_pages
                     }
-    return render(request, html_template, context=context_dict)
+    response = render(request, html_template, context_dict)
+    if 'last_visit' in request.COOKIES:
+        last_visit = request.COOKIES['last_visit']
+        last_visit_time = datetime.strptime(last_visit[:-7], '%Y-%m-%d %H:%M:%S')
+        if (datetime.now() - last_visit_time).seconds >5:
+            visit = visit + 1
+    else:
+        reset_last_visit_time=True
+        context_dict['last_vist'] = visit
+        response = render(request,html_template,context_dict)
+    if reset_last_visit_time:
+        response.set_cookie('last_visit',datetime.now())
+        response.set_cookie('visit',visit)
+    return response
 
 
 def about(request):
@@ -38,7 +55,7 @@ def category(request, category_name_slug):
     context_dict['category'] = category
     category_not_found = get_object_or_404(Category, slug=category_name_slug)
     context_dict['category_not_found'] = category_not_found
-   # context_dict['category_name_slug'] = category_name_slug
+    # context_dict['category_name_slug'] = category_name_slug
     # except Category.DoesNotExist:
     # pass
     return render(request, 'rango/category.html', context_dict)
@@ -83,6 +100,9 @@ def add_page(request, category_name_slug):
 
 
 def register(request):
+    # if request.session.test_cookie_worked():
+    #     print "Test cookie worked"
+    #     request.session.delete_test_cookie()
     registered = False
     if request.method == 'POST':
         user_form = UserForm(data=request.POST)
